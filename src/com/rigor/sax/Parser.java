@@ -1,6 +1,8 @@
 package com.rigor.sax;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,16 +27,22 @@ public class Parser {
 
 		    Matcher matcher1 = Pattern.compile("open(.*?)>").matcher(content);
 		    while (matcher1.find()) {
-		        System.out.println(matcher1.group(1));
+		        startTags.add(matcher1.group(1));
+		        
 		    }
 		    
 		    System.out.println("+++++++++++++++++++++++++++++++++");
 		    
 		    Matcher matcher2 = Pattern.compile("close(.*?)>").matcher(content);
 		    while (matcher2.find()) {
-		        System.out.println(matcher2.group(1));
+		        endTags.add(matcher2.group(1));
+		        
 		    }
-
+		    
+		    System.out.println(startTags);
+		    Collections.reverse(endTags);
+		    System.out.println(endTags);
+		    
 			// Pattern p = Pattern.compile("\\</.*?\\>");
 			// Matcher m = p.matcher(content);
 			//
