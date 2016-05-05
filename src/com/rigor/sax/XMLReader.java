@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-import com.rigor.exceptions.FileNotFoundException;
+import com.rigor.exceptions.NotXMLFileException;
 
 public class XMLReader {
 	
@@ -15,10 +15,11 @@ public class XMLReader {
 	}
 	
 	public static XMLReader getInstance(){
+		//Return XMLReader Object
 		return reader;
 	}
 	
-	public String readFile(String filePath) throws FileNotFoundException{
+	public String readFile(String filePath) throws NotXMLFileException{
 		
 		String fileContent = "";
 		
