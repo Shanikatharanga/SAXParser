@@ -37,11 +37,27 @@ public class XMLValidator {
 
 	public boolean xmlValidate(ArrayList<String> startTags,ArrayList<String> endTags) throws NotValidXMLException {
 
+		ArrayList<String> startTags1 = new ArrayList<>();
+		ArrayList<String> endTags1 = new ArrayList<>();
+		
 		Pattern p = Pattern.compile("<(.|\\n)*?>");
 
 		for(int i=0;i<startTags.size();i++){
-			
+			Matcher m2 = p.matcher(startTags.get(i).toString());
+			//System.out.println(m2.group());
+			while (m2.find()) {				
+				startTags1.add(m2.group().split(" ")[0].replaceAll("[\\<\\>]", ""));
+			}
 		}
+		for(int i=0;i<endTags.size();i++){
+			Matcher m2 = p.matcher(endTags.get(i).toString());
+			//System.out.println(m2.group());
+			while (m2.find()) {				
+				endTags1.add(m2.group().split(" ")[0].replaceAll("[\\<\\/>]", ""));
+			}
+		}
+		
+		
 		
 //		while (m.find()) {
 //			tags.add(m.group().split(" ")[0].replaceAll("[\\<\\>]", ""));
