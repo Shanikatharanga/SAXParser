@@ -44,11 +44,11 @@ public class Parser implements ParserHandler{
 		
 		try {
 
-			if (validater.pathValidate(path) && validater.xmlValidate(startTags, endTags)) {
+			if (validater.pathValidate(path) && validater.xmlValidate(path,startTags, endTags)) {
 				
 				//COde
 				for(int i=0;i<startTags.size();i++){
-					System.out.println(Tag_Lable_Name(startTags.get(i).replaceAll("[\\<\\>]", "")));
+					//System.out.println(Tag_Lable_Name(startTags.get(i).replaceAll("[\\<\\>]", "")));
 				}
 
 			}

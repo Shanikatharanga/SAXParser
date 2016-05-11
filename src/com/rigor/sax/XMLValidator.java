@@ -35,7 +35,7 @@ public class XMLValidator {
 
 	}
 
-	public boolean xmlValidate(ArrayList<String> startTags,ArrayList<String> endTags) throws NotValidXMLException {
+	public boolean xmlValidate(String path,ArrayList<String> startTags,ArrayList<String> endTags) throws NotValidXMLException {
 
 		ArrayList<String> startTags1 = new ArrayList<>();
 		ArrayList<String> endTags1 = new ArrayList<>();
@@ -66,10 +66,21 @@ public class XMLValidator {
 					//System.out.println(startTags);
 				}
 		}
-		System.out.println(startTags1.size() + " "+ startTags1);
+		
+		List<String> a = reader.getTags(path);
+		System.out.println(reader.getTags(path));
+		System.out.println(startTags1.size() + " "+ startTags);
 		System.out.println(endTags1.size() + " "+ endTags1);
 		
-		
+		for(int i=0;i<a.size();i++){
+			String tag = String.valueOf(a.get(i).charAt(0));
+			if(tag.matches("[\\/]")){
+				String tag2 = a.get(i).replaceAll("[\\/]", "");
+				if(tag2.equalsIgnoreCase(a.get(i - 1))){
+					System.out.println("Hureeeeeeeeeee");
+				}
+			}
+		}
 //		while (m.find()) {
 //			tags.add(m.group().split(" ")[0].replaceAll("[\\<\\>]", ""));
 //		}

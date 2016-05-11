@@ -39,7 +39,6 @@ public class XMLReader {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 		return fileContent;
 	}
 
@@ -49,6 +48,9 @@ public class XMLReader {
 
 		while (m.find()) {
 			tags.add(m.group().split(" ")[0].replaceAll("[\\<\\>]", ""));
+		}
+		for(int i=0;i<tags.size();i++){
+			//tags.set(i, "<"+tags.get(i)+">");
 		}
 		return tags;
 	}
