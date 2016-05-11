@@ -57,6 +57,17 @@ public class XMLValidator {
 			}
 		}
 		
+		for(int i=1;i<startTags1.size()-1;i++){
+				if(endTags1.get(i-1).equalsIgnoreCase(startTags1.get(i))){
+					startTags1.remove(i);
+					endTags1.remove(i-1);
+					//System.out.println(startTags);
+				}else{
+					//System.out.println(startTags);
+				}
+		}
+		System.out.println(startTags1.size() + " "+ startTags1);
+		System.out.println(endTags1.size() + " "+ endTags1);
 		
 		
 //		while (m.find()) {
