@@ -3,52 +3,34 @@ package com.rigor.sax;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import com.rigor.exceptions.NotValidXMLException;
 import com.rigor.exceptions.NotXMLFileException;
 import com.rigor.handler.ParserHandler;
 
-public class Parser implements ParserHandler{
+public class Parser{
 
 	XMLReader reader;
 	XMLValidator validater;
 	ArrayList<String> startTags = new ArrayList<String>();
 	ArrayList<String> endTags = new ArrayList<String>();
 
-	// Regex Patterns
-	public static final String OPENNING_TAGS = "<[a-zA-Z](.*?[^?])?>";
-	public static final String CLOSSING_TAGS = "<\\s*\\/\\s*\\w\\s*.*?>|<\\s*br\\s*>";
-	public static final String GET_ATTRIBUTES = "(\\w+)=(\"[^<>\"]*\"|'[^<>']*'|\\w+)";
-
-	public void parse(String path) {
+	public void parse(String path, ParserHandler handler) {
 		reader = XMLReader.getInstance();
 		validater = XMLValidator.getInstance();
-
-		// Get All Opening Tags with Attributes
-		Pattern p1 = Pattern.compile(OPENNING_TAGS);
-		Matcher m1 = p1.matcher(reader.readFile(path));
-
-		while (m1.find()) {
-			startTags.add(m1.group());
-		}
-
-		// Get All Closing Tags
-		Pattern p2 = Pattern.compile(CLOSSING_TAGS);
-		Matcher m2 = p2.matcher(reader.readFile(path));
-
-		while (m2.find()) {
-			endTags.add(m2.group());
-		}
 		
 		try {
 
-			if (validater.pathValidate(path) && validater.xmlValidate(path,startTags, endTags)) {
+			if (validater.pathValidate(path) && validater.xmlValidate(path)) {
 				
-				//COde
-				for(int i=0;i<startTags.size();i++){
-					//System.out.println(Tag_Lable_Name(startTags.get(i).replaceAll("[\\<\\>]", "")));
+				for(int i=0;i<reader.getStartTagsWithoutAtt(path).size();i++){
+					String tag = reader.getStartTagsWithoutAtt(path).get(i).replaceAll("[\\<\\>]", "");
+					handler.startElement(tag);
+				}
+				
+				for(int i=0;i<reader.getEndTags(path).size();i++){
+					String tag = reader.getEndTags(path).get(i).replaceAll("[\\<\\>]", "");
+					handler.endElement(tag);
 				}
 
 			}
@@ -93,29 +75,6 @@ public class Parser implements ParserHandler{
 		list.add(AttbList);
 
 		return list;
-	}
-
-	@Override
-	public void startElement() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void endElement() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void characters() {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	public static void main(String args[]) {
-		Parser parse = new Parser();
-		parse.parse("C:\\Users\\shtharanga\\Desktop\\sample.xml");
 	}
 
 }

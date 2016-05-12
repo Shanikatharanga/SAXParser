@@ -11,10 +11,13 @@ import java.util.regex.Pattern;
 public class XMLReader {
 
 	public static XMLReader reader = new XMLReader();
-	List<String> tags = new ArrayList<String>();
+	
+	public static final String OPENNING_TAGS = "<[a-zA-Z](.*?[^?])?>";
+	public static final String CLOSSING_TAGS = "<\\s*\\/\\s*\\w\\s*.*?>|<\\s*br\\s*>";
+	public static final String GET_ATTRIBUTES = "(\\w+)=(\"[^<>\"]*\"|'[^<>']*'|\\w+)";
 
 	private XMLReader() {
-
+		//Singleton Object
 	}
 
 	public static XMLReader getInstance() {
@@ -45,6 +48,7 @@ public class XMLReader {
 	public List<String> getTags(String path){
 		Pattern p = Pattern.compile("<(.|\\n)*?>");
 		Matcher m = p.matcher(XMLReader.getInstance().readFile(path));
+		List<String> tags = new ArrayList<String>();
 
 		while (m.find()) {
 			tags.add(m.group().split(" ")[0].replaceAll("[\\<\\>]", ""));
@@ -53,5 +57,38 @@ public class XMLReader {
 			//tags.set(i, "<"+tags.get(i)+">");
 		}
 		return tags;
+	}
+	
+	public List<String> getStartTagsWithoutAtt(String path){
+		Pattern p1 = Pattern.compile(OPENNING_TAGS);
+		Matcher m1 = p1.matcher(reader.readFile(path));
+		List<String> startTags = new ArrayList<String>();
+
+		while (m1.find()) {
+			startTags.add(m1.group().split(" ")[0]);
+		}
+		return startTags;
+	}
+	
+	public List<String> getStartTagsWithAtt(String path){
+		Pattern p1 = Pattern.compile(OPENNING_TAGS);
+		Matcher m1 = p1.matcher(reader.readFile(path));
+		List<String> startTags = new ArrayList<String>();
+
+		while (m1.find()) {
+			startTags.add(m1.group());
+		}
+		return startTags;
+	}
+	
+	public List<String> getEndTags(String path){
+		Pattern p1 = Pattern.compile(CLOSSING_TAGS);
+		Matcher m1 = p1.matcher(reader.readFile(path));
+		List<String> startTags = new ArrayList<String>();
+
+		while (m1.find()) {
+			startTags.add(m1.group().replaceAll("[\\/]", ""));
+		}
+		return startTags;
 	}
 }

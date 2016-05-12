@@ -2,10 +2,10 @@ package com.rigor.handler;
 
 public interface ParserHandler {
 	
-	public void startElement();
+	public void startElement(String startTag);
 	
-	public void endElement();
+	public void endElement(String endTag);
 	
-	public void characters();
+	public void characters(String tagName, String Content);
 
 }
