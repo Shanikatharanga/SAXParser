@@ -33,7 +33,7 @@ public class XMLReader {
 			String cLine;
 
 			while ((cLine = br.readLine()) != null) {
-				fileContent = fileContent.concat(cLine.trim());
+				fileContent = fileContent.concat(cLine.trim().concat(" "));
 			}
 			fileContent = fileContent.replaceAll("<!--[^>]*-->", "");
 			fileContent = fileContent.replaceAll("<\\?xml[^>]*?>", "");

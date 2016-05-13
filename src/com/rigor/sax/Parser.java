@@ -25,7 +25,10 @@ public class Parser{
 				
 				for(int i=0;i<reader.getStartTagsWithoutAtt(path).size();i++){
 					String tag = reader.getStartTagsWithoutAtt(path).get(i).replaceAll("[\\<\\>]", "");
-					handler.startElement(tag);
+					String tag1 = reader.getStartTagsWithAtt(path).get(i).replaceAll("[\\<\\>]", "");
+					
+					handler.startElement(path,tag,(String)Tag_Lable_Name(tag1).get(1));
+					
 				}
 				
 				for(int i=0;i<reader.getEndTags(path).size();i++){
@@ -44,7 +47,7 @@ public class Parser{
 
 	}
 
-	public Map<String, String> AttributrList(String atts) {
+	public Map<String, String> AttributeList(String atts) {
 
 		Map<String, String> hash = new HashMap<String, String>();
 		for (int k = 0; k < atts.split("\"").length - 1; k++) {
@@ -67,7 +70,7 @@ public class Parser{
 
 		if (Tag.split(" ").length > 1) {
 			atts = Tag.substring(Tag.indexOf(" ")).replaceAll(" ", "");
-			AttbList = AttributrList(atts).toString();
+			AttbList = AttributeList(atts).toString();
 		} else if (Tag.split(" ").length == 1) {
 			// System.out.println("No attributes found!!!");
 		}

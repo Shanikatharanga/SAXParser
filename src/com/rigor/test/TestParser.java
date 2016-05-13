@@ -12,8 +12,8 @@ public class TestParser extends Parser{
 		ParserHandler handler = new ParserHandler(){
 
 			@Override
-			public void startElement(String startTag) {
-				System.out.println("Start Element :" + startTag);
+			public void startElement(String Uri,String startTag, String Attr) {
+				System.out.println("End Element :" + startTag);
 			}
 
 			@Override
@@ -23,10 +23,10 @@ public class TestParser extends Parser{
 
 			@Override
 			public void characters(String tagName, String Content) {
-				// TODO Auto-generated method stub
+
 				
-			}
 				
+			}	
 			
 		};
 		
